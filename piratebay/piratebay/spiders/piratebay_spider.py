@@ -15,14 +15,12 @@ class PiratebaySpider(BaseSpider):
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         sites = hxs.select('//div[@class="detName"]')
-        items = []
         for site in sites:
             item = UniversalItem()
             item['title'] = site.select('a/text()').extract()[0]
             item['link'] = "http://thepiratebay.sx" + site.select('a/@href').extract()[0]
             item['ref'] = "thepiratebay.sx"
-            items.append(item)
-        return items
+            yield item
 
 class KickassSpider(BaseSpider):
     name = "kickass"
@@ -33,14 +31,12 @@ class KickassSpider(BaseSpider):
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         sites = hxs.select('//div[@class="torrentname"]')
-        items = []
         for site in sites:
             item = UniversalItem()
             item['title'] = site.select('a[2]/text()').extract()[0]
             item['link'] = "http://kickass.to" + site.select('a/@href').extract()[0]
             item['ref'] = "kickass.io"
-            items.append(item)
-        return items
+            yield item
 
 class LeetxSpider(BaseSpider):
     name = "leetx"
@@ -51,14 +47,12 @@ class LeetxSpider(BaseSpider):
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         sites = hxs.select('//h3[@class="org"]')
-        items = []
         for site in sites:
             item = UniversalItem()
             item['title'] = site.select('a/text()').extract()[0]
             item['link'] = "http://1337x.org" + site.select('a/@href').extract()[0]
             item['ref'] = "1337x.org"
-            items.append(item)
-        return items
+            yield item
 
 class SkidrowCrackSpider(BaseSpider):
     name = "skidrowcrack"
@@ -69,14 +63,12 @@ class SkidrowCrackSpider(BaseSpider):
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         sites = hxs.select('//ul[@class="lcp_catlist"]/li')
-        items = []
         for site in sites:
             item = UniversalItem()
             item['title'] = site.select('a/text()').extract()[0]
             item['link'] = site.select('a/@href').extract()[0]
             item['ref'] = "skidrowcrack.com"
-            items.append(item)
-        return items
+            yield item
 
 class TorrentDownloadsSpider(BaseSpider):
     name = "torrentdownloads"
@@ -88,14 +80,12 @@ class TorrentDownloadsSpider(BaseSpider):
         hxs = HtmlXPathSelector(response)
         titles = hxs.select('//div[@class="inner_container"]/div/p/a/text()').extract()
         links = hxs.select('//div[@class="inner_container"]/div/p/a/@href').extract()
-        items = []
         for i, v in zip(titles,links):
             item = UniversalItem()
             item['title'] = i
             item['link'] = "http://www.torrentdownloads.me" + v
             item['ref'] = "torrentdownloads.me"
-            items.append(item)
-        return items
+            yield item
 
 class SumoTorrentSpider(BaseSpider):
     name = "sumotorrent"
@@ -106,14 +96,12 @@ class SumoTorrentSpider(BaseSpider):
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         sites = hxs.select('//div[@style="overflow:hidden;width:95%;height:15px;padding-top:4px;padding-bottom:4px;white-space: nowrap;"]')
-        items = []
         for site in sites:
             item = UniversalItem()
             item['title'] = site.select('a/text()').extract()[0]
             item['link'] = url_fix(site.select('a/@href').extract()[0])
             item['ref'] = "sumotorrent.sx"
-            items.append(item)
-        return items
+            yield item
 
 class BitSnoopSpider(BaseSpider):
     name = "bitsnoop"
@@ -123,14 +111,12 @@ class BitSnoopSpider(BaseSpider):
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         sites = hxs.select('//ol[@id="torrents"]/li')
-        items = []
         for site in sites:
             item = UniversalItem()
             item['title'] = site.select('a/text()').extract()[0]
             item['link'] = "http://bitsnoop.com" + url_fix(site.select('a/@href').extract()[0])
             item['ref'] = "bitsnoop.com"
-            items.append(item)
-        return items
+            yield item
 
 def url_fix(s, charset='utf-8'):
     if isinstance(s, unicode):
