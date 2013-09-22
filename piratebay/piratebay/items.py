@@ -6,6 +6,6 @@
 from scrapy.item import Item, Field
 
 class UniversalItem(Item):
-	title = Field()
-	link = Field()
-	ref = Field()
+    title = Field()
+    link = Field()
+    ref = Field()
