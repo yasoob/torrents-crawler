@@ -1,4 +1,4 @@
-torrents-crawler
+Torrents-Crawler
 ================
 
 This is a scrapy project in which I have implemented several crawlers for different torrent and direct link websites. This project crawls for the title and the url only right now because this was my only requirement.  
