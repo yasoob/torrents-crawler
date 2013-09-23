@@ -47,4 +47,4 @@ If you want to add further support for some more websites then feel free to edit
 If there is an issue with the scripts present here do open an issue or if you want me to add support for a website do tell me.
 
 ###Contribute:
-You can contribute literraly anything. Whether a new crawler or some small optimisations. Just do a PR and make this project grow.
+You can contribute literally anything. Whether a new crawler or some small optimisations. Just do a PR and make this project grow.
