@@ -48,3 +48,5 @@ If there is an issue with the scripts present here do open an issue or if you wa
 
 ###Contribute:
 You can contribute literally anything. Whether a new crawler or some small optimisations. Just do a PR and make this project grow.
+
+**Note:** This project is not maintained anymore.
