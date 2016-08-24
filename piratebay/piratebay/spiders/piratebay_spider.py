@@ -1,5 +1,5 @@
 from scrapy.spiders import BaseSpider
-from scrapy.selector import HtmlXPathSelector
+from scrapy import Selector
 
 import urllib
 import urlparse
@@ -13,7 +13,7 @@ class PiratebaySpider(BaseSpider):
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
+        hxs = Selector(response)
         sites = hxs.xpath('//div[@class="detName"]')
         for site in sites:
             item = UniversalItem()
@@ -29,7 +29,7 @@ class LeetxSpider(BaseSpider):
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
+        hxs = Selector(response)
         sites = hxs.xpath('//h3[@class="org"]')
         for site in sites:
             item = UniversalItem()
@@ -45,7 +45,7 @@ class SkidrowCrackSpider(BaseSpider):
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
+        hxs = Selector(response)
         sites = hxs.xpath('//ul[@class="lcp_catlist"]/li')
         for site in sites:
             item = UniversalItem()
@@ -61,7 +61,7 @@ class TorrentDownloadsSpider(BaseSpider):
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
+        hxs = Selector(response)
         titles = hxs.xpath('//div[@class="inner_container"]/div/p/a/text()').extract()
         links = hxs.xpath('//div[@class="inner_container"]/div/p/a/@href').extract()
         for i, v in zip(titles,links):
@@ -78,7 +78,7 @@ class SumoTorrentSpider(BaseSpider):
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
+        hxs = Selector(response)
         sites = hxs.xpath('//div[@style="overflow:hidden;width:95%;height:15px;padding-top:4px;padding-bottom:4px;white-space: nowrap;"]')
         for site in sites:
             item = UniversalItem()
@@ -93,7 +93,7 @@ class BitSnoopSpider(BaseSpider):
     start_urls = ["http://bitsnoop.com/popular/seeders_games.html"]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
+        hxs = Selector(response)
         sites = hxs.xpath('//ol[@id="torrents"]/li')
         for site in sites:
             item = UniversalItem()
