@@ -8,7 +8,7 @@ from piratebay.items import UniversalItem
 
 class PiratebaySpider(BaseSpider):
     name = "piratebay"
-    allowed_domains = ["thepiratebay.sx"]
+    allowed_domains = ["thepiratebay.org"]
     with open('links/piratebay.txt', 'r') as file:
         start_urls = [i.strip() for i in file.readlines()]
 
@@ -18,8 +18,8 @@ class PiratebaySpider(BaseSpider):
         for site in sites:
             item = UniversalItem()
             item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = "http://thepiratebay.sx" + site.select('a/@href').extract()[0]
-            item['ref'] = "thepiratebay.sx"
+            item['link'] = "http://thepiratebay.org" + site.select('a/@href').extract()[0]
+            item['ref'] = "thepiratebay.org"
             yield item
 
 class LeetxSpider(BaseSpider):
