@@ -14,11 +14,11 @@ class PiratebaySpider(BaseSpider):
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//div[@class="detName"]')
+        sites = hxs.xpath('//div[@class="detName"]')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = "http://thepiratebay.org" + site.select('a/@href').extract()[0]
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = "http://thepiratebay.org" + site.xpath('a/@href').extract()[0]
             item['ref'] = "thepiratebay.org"
             yield item
 
@@ -30,11 +30,11 @@ class LeetxSpider(BaseSpider):
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//h3[@class="org"]')
+        sites = hxs.xpath('//h3[@class="org"]')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = "http://1337x.org" + site.select('a/@href').extract()[0]
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = "http://1337x.org" + site.xpath('a/@href').extract()[0]
             item['ref'] = "1337x.org"
             yield item
 
@@ -46,11 +46,11 @@ class SkidrowCrackSpider(BaseSpider):
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//ul[@class="lcp_catlist"]/li')
+        sites = hxs.xpath('//ul[@class="lcp_catlist"]/li')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = site.select('a/@href').extract()[0]
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = site.xpath('a/@href').extract()[0]
             item['ref'] = "skidrowcrack.com"
             yield item
 
@@ -62,8 +62,8 @@ class TorrentDownloadsSpider(BaseSpider):
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
-        titles = hxs.select('//div[@class="inner_container"]/div/p/a/text()').extract()
-        links = hxs.select('//div[@class="inner_container"]/div/p/a/@href').extract()
+        titles = hxs.xpath('//div[@class="inner_container"]/div/p/a/text()').extract()
+        links = hxs.xpath('//div[@class="inner_container"]/div/p/a/@href').extract()
         for i, v in zip(titles,links):
             item = UniversalItem()
             item['title'] = i
@@ -79,11 +79,11 @@ class SumoTorrentSpider(BaseSpider):
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//div[@style="overflow:hidden;width:95%;height:15px;padding-top:4px;padding-bottom:4px;white-space: nowrap;"]')
+        sites = hxs.xpath('//div[@style="overflow:hidden;width:95%;height:15px;padding-top:4px;padding-bottom:4px;white-space: nowrap;"]')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = url_fix(site.select('a/@href').extract()[0])
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = url_fix(site.xpath('a/@href').extract()[0])
             item['ref'] = "sumotorrent.sx"
             yield item
 
@@ -94,11 +94,11 @@ class BitSnoopSpider(BaseSpider):
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//ol[@id="torrents"]/li')
+        sites = hxs.xpath('//ol[@id="torrents"]/li')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = "http://bitsnoop.com" + url_fix(site.select('a/@href').extract()[0])
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = "http://bitsnoop.com" + url_fix(site.xpath('a/@href').extract()[0])
             item['ref'] = "bitsnoop.com"
             yield item
 
