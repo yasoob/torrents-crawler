@@ -1,5 +1,5 @@
-from scrapy.spider import BaseSpider
-from scrapy.selector import HtmlXPathSelector
+from scrapy.spiders import BaseSpider
+from scrapy import Selector
 
 import urllib
 import urlparse
@@ -8,18 +8,18 @@ from piratebay.items import UniversalItem
 
 class PiratebaySpider(BaseSpider):
     name = "piratebay"
-    allowed_domains = ["thepiratebay.sx"]
+    allowed_domains = ["thepiratebay.org"]
     with open('links/piratebay.txt', 'r') as file:
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//div[@class="detName"]')
+        hxs = Selector(response)
+        sites = hxs.xpath('//div[@class="detName"]')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = "http://thepiratebay.sx" + site.select('a/@href').extract()[0]
-            item['ref'] = "thepiratebay.sx"
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = "http://thepiratebay.org" + site.xpath('a/@href').extract()[0]
+            item['ref'] = "thepiratebay.org"
             yield item
 
 class KickassSpider(BaseSpider):
@@ -45,12 +45,12 @@ class LeetxSpider(BaseSpider):
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//h3[@class="org"]')
+        hxs = Selector(response)
+        sites = hxs.xpath('//h3[@class="org"]')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = "http://1337x.org" + site.select('a/@href').extract()[0]
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = "http://1337x.org" + site.xpath('a/@href').extract()[0]
             item['ref'] = "1337x.org"
             yield item
 
@@ -61,12 +61,12 @@ class SkidrowCrackSpider(BaseSpider):
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//ul[@class="lcp_catlist"]/li')
+        hxs = Selector(response)
+        sites = hxs.xpath('//ul[@class="lcp_catlist"]/li')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = site.select('a/@href').extract()[0]
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = site.xpath('a/@href').extract()[0]
             item['ref'] = "skidrowcrack.com"
             yield item
 
@@ -77,9 +77,9 @@ class TorrentDownloadsSpider(BaseSpider):
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        titles = hxs.select('//div[@class="inner_container"]/div/p/a/text()').extract()
-        links = hxs.select('//div[@class="inner_container"]/div/p/a/@href').extract()
+        hxs = Selector(response)
+        titles = hxs.xpath('//div[@class="inner_container"]/div/p/a/text()').extract()
+        links = hxs.xpath('//div[@class="inner_container"]/div/p/a/@href').extract()
         for i, v in zip(titles,links):
             item = UniversalItem()
             item['title'] = i
@@ -94,12 +94,12 @@ class SumoTorrentSpider(BaseSpider):
         start_urls = [i.strip() for i in file.readlines()]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//div[@style="overflow:hidden;width:95%;height:15px;padding-top:4px;padding-bottom:4px;white-space: nowrap;"]')
+        hxs = Selector(response)
+        sites = hxs.xpath('//div[@style="overflow:hidden;width:95%;height:15px;padding-top:4px;padding-bottom:4px;white-space: nowrap;"]')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = url_fix(site.select('a/@href').extract()[0])
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = url_fix(site.xpath('a/@href').extract()[0])
             item['ref'] = "sumotorrent.sx"
             yield item
 
@@ -109,12 +109,12 @@ class BitSnoopSpider(BaseSpider):
     start_urls = ["http://bitsnoop.com/popular/seeders_games.html"]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        sites = hxs.select('//ol[@id="torrents"]/li')
+        hxs = Selector(response)
+        sites = hxs.xpath('//ol[@id="torrents"]/li')
         for site in sites:
             item = UniversalItem()
-            item['title'] = site.select('a/text()').extract()[0]
-            item['link'] = "http://bitsnoop.com" + url_fix(site.select('a/@href').extract()[0])
+            item['title'] = site.xpath('a/text()').extract()[0]
+            item['link'] = "http://bitsnoop.com" + url_fix(site.xpath('a/@href').extract()[0])
             item['ref'] = "bitsnoop.com"
             yield item
 
